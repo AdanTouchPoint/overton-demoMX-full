@@ -108,8 +108,9 @@ const MainForm = ({dataUser, setDataUser, mp, setMp, setEmailData, emailData, cl
                     >
                     </Link>
                     <Form onSubmit={click} noValidate validated={validated}>
-                        <h3 className='find-her-mp-text'>{mainData.firstFormLabel1}</h3>
+                        <h3 className='find-her-mp-text'>{mainData.subtitleForm}</h3>
                         <Form.Group>
+                            <Form.Label>{mainData.firstFormLabel1}</Form.Label>
                             <Form.Control
                                 type="email"
                                 placeholder={mainData.firstFormPlaceholder1}
