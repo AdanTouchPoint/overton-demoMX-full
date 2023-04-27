@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import {Card, Placeholder} from 'react-bootstrap'
+import './spinner.css'
 export default function LoadingMainForm() {
   return (
     <div className="spinner-container" >
