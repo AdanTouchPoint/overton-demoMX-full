@@ -11,7 +11,7 @@ const ThankYou = ({showThankYou, setShowFindForm, setShowThankYou, typData}) => 
     }
     return (
         <div hidden={showThankYou} className={'container typ-container'}>
-            <form onSubmit={click}>
+            <form name='fm-tym' onSubmit={click}>
                 <div className='typ-content'>
                     <h3>{typData.data?.docs[0] ? typData.data?.docs[0].thankYouMessage : typData.thankYouMessage}</h3>
                     <h5>{typData.data?.docs[0] ? typData.data?.docs[0].secondThankYouMessage : typData.secondThankYouMessage }</h5>
