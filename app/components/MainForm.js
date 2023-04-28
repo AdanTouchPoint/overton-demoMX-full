@@ -10,8 +10,7 @@ import ThankYou from "./ThankYou";
 import Card from "react-bootstrap/cjs/Card";
 import {Link, animateScroll as scroll} from "react-scroll";
 import { fetchRepresentatives } from '../assets/petitions/fetchRepresentatives';
-
-const MainForm = ({dataUser, setDataUser, mp, setMp, setEmailData, emailData, clientId, states, tweet, typData, mainData, backendURLBase, endpoints, backendURLBaseServices}) => {
+const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailData, clientId, states, tweet, typData, mainData, backendURLBase, endpoints, backendURLBaseServices}) => {
     const [showLoadSpin, setShowLoadSpin] = useState(false)
     const [showList, setShowList] = useState(true)
     const [showFindForm, setShowFindForm] = useState(false)
@@ -107,7 +106,7 @@ const MainForm = ({dataUser, setDataUser, mp, setMp, setEmailData, emailData, cl
                         duration={500}
                     >
                     </Link>
-                    <Form onSubmit={click} noValidate validated={validated}>
+                    <Form name='fm-find' onSubmit={click} noValidate validated={validated}>
                         <h3 className='find-her-mp-text'>{mainData.subtitleForm}</h3>
                         <Form.Group>
                             <Form.Label>{mainData.firstFormLabel1}</Form.Label>
