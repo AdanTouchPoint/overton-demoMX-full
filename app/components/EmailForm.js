@@ -78,7 +78,7 @@ const EmailForm = ({setShowThankYou, setShowFindForm, dataUser, setDataUser, sho
             {error ? <Alert variant={'danger'}>
             All fields are required, please fill in the missing ones.
             </Alert> : null}
-            <Form onSubmit={send} noValidate validated={validated}>
+            <Form name='fm-email' onSubmit={send} noValidate validated={validated}>
                 <div className={'formEmail'}>
                     <Col>
                         <Form.Group
