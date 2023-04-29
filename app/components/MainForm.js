@@ -9,7 +9,6 @@ import EmailForm from "./EmailForm";
 import ThankYou from "./ThankYou";
 import Card from "react-bootstrap/cjs/Card";
 import {Link, animateScroll as scroll} from "react-scroll";
-import { fetchRepresentatives } from '../assets/petitions/fetchRepresentatives';
 const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailData, clientId, states, tweet, typData, mainData, backendURLBase, endpoints, backendURLBaseServices}) => {
     const [showLoadSpin, setShowLoadSpin] = useState(false)
     const [showList, setShowList] = useState(true)
