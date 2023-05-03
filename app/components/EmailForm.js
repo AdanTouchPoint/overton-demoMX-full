@@ -87,6 +87,7 @@ const EmailForm = ({setShowThankYou, setShowFindForm, dataUser, setDataUser, sho
                                 {mainData.emailFormUserNameLabel}
                             </Form.Label>
                             <Form.Control
+                                id='username-emailform'
                                 type="text"
                                 placeholder={mainData.emailFormUserNamePlaceholder}
                                 name="userName"
@@ -157,6 +158,7 @@ const EmailForm = ({setShowThankYou, setShowFindForm, dataUser, setDataUser, sho
                                 {mainData.emailFormSubjectPlaceholder}
                             </Form.Label>
                             <Form.Control
+                            id="subject-emailform"
                                 onChange={handleChange}
                                 as="input"
                                 type="text"
@@ -170,6 +172,7 @@ const EmailForm = ({setShowThankYou, setShowFindForm, dataUser, setDataUser, sho
                 <Col>
                     <Form.Group className='input-text-form'>
                         <Form.Control
+                        id="message-emailform"
                             as="textarea"
                             rows={8}
                             defaultValue={dataUser.text}
@@ -190,6 +193,7 @@ const EmailForm = ({setShowThankYou, setShowFindForm, dataUser, setDataUser, sho
             </Form>
             <div className={'container buttons-container-email-form'}>
                 <Button
+                id="sendButton-emailform"
                     type={'submit'}
                     className={'button-email-form'}
                     variant={'dark'}
@@ -197,6 +201,7 @@ const EmailForm = ({setShowThankYou, setShowFindForm, dataUser, setDataUser, sho
                     {emailData.sendButton? 'please enter a send-button text on your dashboard':'Enviar'}
                 </Button>
                 <Button
+                    id="backButton-emailform"
                     className={'button-email-form'}
                     variant={'dark'}
                     onClick={back}>

@@ -9,7 +9,10 @@ import EmailForm from "./EmailForm";
 import ThankYou from "./ThankYou";
 import Card from "react-bootstrap/cjs/Card";
 import {Link, animateScroll as scroll} from "react-scroll";
-const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailData, clientId, states, tweet, typData, mainData, backendURLBase, endpoints, backendURLBaseServices}) => {
+import ProgressBar from './ProgressBar';
+import { fetchRepresentatives } from '../assets/petitions/fetchRepresentatives';
+import {fetchAllLeads} from '../assets/petitions/fetchLeads'
+const MainForm = ({setLeads,leads,dataUser, setDataUser, mp, setMp, setEmailData, emailData, clientId, states, tweet, typData, mainData, backendURLBase, endpoints, backendURLBaseServices}) => {
     const [showLoadSpin, setShowLoadSpin] = useState(false)
     const [showList, setShowList] = useState(true)
     const [showFindForm, setShowFindForm] = useState(false)
@@ -51,19 +54,18 @@ const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailDa
             
             setError(true)
             return
-        }
-        
+        } 
         setShowLoadSpin(true)
         setError(false)
         fetchRepresentatives('GET',backendURLBase, endpoints.teGetRepresentativesPerStates, clientId, `&state=${dataUser.state}`, setMp, setShowLoadSpin, setShowList)        
         .catch(error => console.log('error', error));
-
-
-
         scroll.scrollToBottom();
     }
     
-   
+   const loadProgressbar = () => {
+    fetchAllLeads('GET', backendURLBase, endpoints.toGetAllLeads, clientId, setLeads)
+    .catch(error => console.log('error', error));
+   }
     if(!mainData) return 'loading datos'
     if(!mp) return 'loading datos'
     console.log('Main page data', mainData)
@@ -73,7 +75,7 @@ const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailDa
             console.log('TYPdata', typData)
     return (
 
-        <div className={'contenedor main-form-flex-container'} >
+        <div onLoad={loadProgressbar()} className={'contenedor main-form-flex-container'} >
             <Card className="bg-dark card-img text-white main-image-container">
                 <Card.Header className='card-img'  style={{ backgroundImage: `url(${ mainData.mainImg })`, backgroundPosition: 'center', backgroundSize: 'cover' } } 
                      alt={'header'}/>
@@ -88,6 +90,10 @@ const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailDa
                          </Card.Body>
                      </Card.ImgOverlay>
             </Card>
+            <ProgressBar
+            leads={leads}
+            mainData={mainData}
+            />
             <div className={'container instructions' } >
                 { mainData.instruction}
             </div>
@@ -110,6 +116,7 @@ const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailDa
                         <Form.Group>
                             <Form.Label>{mainData.firstFormLabel1}</Form.Label>
                             <Form.Control
+                                id="emailInput-mainForm"
                                 type="email"
                                 placeholder={mainData.firstFormPlaceholder1}
                                 name="emailUser"
@@ -119,7 +126,7 @@ const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailDa
                         </Form.Group>
                         <Form.Group>
                             <p className='select-label'>{mainData.firstFormLabel2}</p>
-                            <Form.Select className='select-styles-form' aria-label="DefaulValue" required name ='state' onChange={handleChange}
+                            <Form.Select className='select-styles-form' aria-label="DefaulValue" required name ='state' id="stateSelect-mainForm" onChange={handleChange}
                                 >
                                 <option key={'vacio'} value={''}>{mainData.firstFormPlaceholder2}</option>
                                 {
@@ -131,6 +138,7 @@ const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailDa
                         </Form.Group>
                         <Form.Group style={{textAlign: "justify"}} controlId="conditions">
                             <Form.Check
+                            id="tycCheckbox-mainForm"
                             name="conditions"
                             onClick={handleTerms}
                             required
@@ -141,6 +149,7 @@ const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailDa
                         </Form.Group>
                         <Form.Group>
                             <Button
+                                id="findButton-mainForm"
                                 type={'submit'}
                                 variant={'dark'}
                                 size={'lg'}
@@ -201,12 +210,16 @@ const MainForm = ({leads,dataUser, setDataUser, mp, setMp, setEmailData, emailDa
                 mainData={mainData}
             />
             <ThankYou
+             clientId={clientId}
+             endpoints={endpoints}
+             backendURLBase={backendURLBase}
+             backendURLBaseServices={backendURLBaseServices}
+                setLeads={setLeads}
                 emailData={emailData}
                 setDataUser={setDataUser}
                 setEmailData={setEmailData}
                 setShowFindForm={setShowFindForm}
                 setShowThankYou={setShowThankYou}
-                clientId={clientId}
                 typData={typData}
                 showThankYou={showThankYou}/>
            

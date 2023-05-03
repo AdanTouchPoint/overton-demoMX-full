@@ -8,6 +8,7 @@ import { fetchStatesData } from './assets/petitions/fetchStatesData';
 import { fetchTweet } from './assets/petitions/fetchTweet';
 import { fetchTYM } from './assets/petitions/fetchTYM';
 import { fetchMainContent } from './assets/petitions/fetchMainContent';
+
 //require('dotenv').config()
 function Home() {
   const [emailData, setEmailData] = useState({
@@ -32,8 +33,10 @@ function Home() {
         toGetThankYouMessage:'/typ-message/',
         toGetTweets:'/tweets/',
         toSaveLeads:'/leads/',
+        toGetAllLeads:'/leads/',
         toSendEmails:'/send-email/',
       })
+    const [leads, setLeads] = useState()
     const [mp, setMp] = useState([])
     const [senator, setSenator] = useState([])
     const [states, setStates] = useState([])
@@ -69,6 +72,7 @@ function Home() {
 
         async function fetchData() {
           await Promise.all([
+            //fetchAllLeads('GET', backendURLBase, endpoints.toGetAllLeads, clientId, setLeads),
             fetchMainContent('GET', backendURLBase, endpoints.toGetMainData, clientId, '', setMainData),
             fetchEmailData('GET', backendURLBase, endpoints.toGetEmailsContent, clientId, "", setDataUser),
             fetchStatesData('GET', backendURLBase, endpoints.toGetAllRepresentatives, clientId, '', setStates),
@@ -81,9 +85,6 @@ function Home() {
     
         fetchData()
     },[])
-    
-
-
     return(
       <>
         {/* <LoadingMainForm/> */}
@@ -93,6 +94,8 @@ function Home() {
       {
         !loading && (
           <MainForm
+              setLeads={setLeads}
+              leads={leads}
               setEmailData={setEmailData}
               emailData={emailData}
               dataUser={dataUser}
