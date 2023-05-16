@@ -11,7 +11,7 @@ import Card from "react-bootstrap/cjs/Card";
 import {Link, animateScroll as scroll} from "react-scroll";
 import ProgressBar from './ProgressBar';
 import { fetchRepresentatives } from '../assets/petitions/fetchRepresentatives';
-import {fetchAllLeads} from '../assets/petitions/fetchLeads'
+
 const MainForm = ({setLeads,leads,dataUser, setDataUser, mp, setMp, setEmailData, emailData, clientId, states, tweet, typData, mainData, backendURLBase, endpoints, backendURLBaseServices}) => {
     const [showLoadSpin, setShowLoadSpin] = useState(false)
     const [showList, setShowList] = useState(true)
@@ -42,7 +42,10 @@ const MainForm = ({setLeads,leads,dataUser, setDataUser, mp, setMp, setEmailData
 
     const click = async e => {
         e.preventDefault();
-
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        const isValidEmail = (email) => {
+          return emailRegex.test(email);
+        };
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
             e.preventDefault();
@@ -50,7 +53,7 @@ const MainForm = ({setLeads,leads,dataUser, setDataUser, mp, setMp, setEmailData
         }
         setValidated(true);
         if (
-        tac === false || state.trim() === '' || emailUser.trim() === '') {
+        tac === false || state.trim() === '' || isValidEmail(emailUser) === false) {
             
             setError(true)
             return
@@ -61,11 +64,7 @@ const MainForm = ({setLeads,leads,dataUser, setDataUser, mp, setMp, setEmailData
         .catch(error => console.log('error', error));
         scroll.scrollToBottom();
     }
-    
-   const loadProgressbar = () => {
-    fetchAllLeads('GET', backendURLBase, endpoints.toGetAllLeads, clientId, setLeads)
-    .catch(error => console.log('error', error));
-   }
+
     if(!mainData) return 'loading datos'
     if(!mp) return 'loading datos'
     console.log('Main page data', mainData)
@@ -75,7 +74,7 @@ const MainForm = ({setLeads,leads,dataUser, setDataUser, mp, setMp, setEmailData
             console.log('TYPdata', typData)
     return (
 
-        <div onLoad={loadProgressbar()} className={'contenedor main-form-flex-container'} >
+        <div className={'contenedor main-form-flex-container'} >
             <Card className="bg-dark card-img text-white main-image-container">
                 <Card.Header className='card-img'  style={{ backgroundImage: `url(${ mainData.mainImg })`, backgroundPosition: 'center', backgroundSize: 'cover' } } 
                      alt={'header'}/>
@@ -136,7 +135,7 @@ const MainForm = ({setLeads,leads,dataUser, setDataUser, mp, setMp, setEmailData
                                 }
                             </Form.Select>
                         </Form.Group>
-                        <Form.Group style={{textAlign: "justify"}} controlId="conditions">
+                        <Form.Group style={{textAlign: "justify"}} >
                             <Form.Check
                             id="tycCheckbox-mainForm"
                             name="conditions"

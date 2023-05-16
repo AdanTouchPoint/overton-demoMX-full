@@ -82,7 +82,7 @@ const EmailForm = ({setShowThankYou, setShowFindForm, dataUser, setDataUser, sho
                 <div className={'formEmail'}>
                     <Col>
                         <Form.Group
-                            controlId="name">
+                            >
                             <Form.Label>
                                 {mainData.emailFormUserNameLabel}
                             </Form.Label>
@@ -98,7 +98,7 @@ const EmailForm = ({setShowThankYou, setShowFindForm, dataUser, setDataUser, sho
                     </Col>
                     <Col>
                         <Form.Group
-                            controlId="email">
+                            >
                             <Form.Label>
                                 {mainData.emailFormUserLabel}
                             </Form.Label>

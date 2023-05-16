@@ -8,7 +8,6 @@ const fetchAllLeads = async (petitionMethod,backendURLBase, endpoint, clientId, 
    const  leads = await fetchData(petitionMethod, backendURLBase, endpoint, clientId)
     const data = leads.data
     setLeads(data)
-    console.log(data)
 }
 
 export {
